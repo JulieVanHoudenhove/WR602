@@ -28,9 +28,6 @@ class Subscription
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $media = null;
 
-    #[ORM\OneToOne(mappedBy: 'subscription', cascade: ['persist', 'remove'])]
-    private ?User $subscription_end_at = null;
-
     public function getId(): ?int
     {
         return $this->id;
