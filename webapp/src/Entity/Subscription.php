@@ -92,26 +92,4 @@ class Subscription
 
         return $this;
     }
-
-    public function getSubscriptionEndAt(): ?User
-    {
-        return $this->subscription_end_at;
-    }
-
-    public function setSubscriptionEndAt(?User $subscription_end_at): static
-    {
-        // unset the owning side of the relation if necessary
-        if ($subscription_end_at === null && $this->subscription_end_at !== null) {
-            $this->subscription_end_at->setSubscription(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($subscription_end_at !== null && $subscription_end_at->getSubscription() !== $this) {
-            $subscription_end_at->setSubscription($this);
-        }
-
-        $this->subscription_end_at = $subscription_end_at;
-
-        return $this;
-    }
 }
