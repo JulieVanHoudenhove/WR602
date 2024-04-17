@@ -28,9 +28,6 @@ class Subscription
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $media = null;
 
-    #[ORM\OneToOne(mappedBy: 'subscription', cascade: ['persist', 'remove'])]
-    private ?User $subscription_end_at = null;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -92,28 +89,6 @@ class Subscription
     public function setMedia(?string $media): static
     {
         $this->media = $media;
-
-        return $this;
-    }
-
-    public function getSubscriptionEndAt(): ?User
-    {
-        return $this->subscription_end_at;
-    }
-
-    public function setSubscriptionEndAt(?User $subscription_end_at): static
-    {
-        // unset the owning side of the relation if necessary
-        if ($subscription_end_at === null && $this->subscription_end_at !== null) {
-            $this->subscription_end_at->setSubscription(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($subscription_end_at !== null && $subscription_end_at->getSubscription() !== $this) {
-            $subscription_end_at->setSubscription($this);
-        }
-
-        $this->subscription_end_at = $subscription_end_at;
 
         return $this;
     }

@@ -45,9 +45,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?\DateTimeImmutable $updated_at = null;
 
-    #[ORM\OneToOne(inversedBy: 'subscription_end_at', cascade: ['persist', 'remove'])]
-    private ?Subscription $subscription = null;
-
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $subscription_end_at = null;
 
@@ -57,9 +54,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Pdf::class, mappedBy: 'user')]
     private Collection $pdf;
 
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'users')]
+    private ?self $subscription = null;
+
+    /**
+     * @var Collection<int, self>
+     */
+    #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'subscription')]
+    private Collection $users;
+
     public function __construct()
     {
         $this->pdf = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -185,18 +192,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getSubscription(): ?Subscription
-    {
-        return $this->subscription;
-    }
-
-    public function setSubscription(?Subscription $subscription): static
-    {
-        $this->subscription = $subscription;
-
-        return $this;
-    }
-
     public function getSubscriptionEndAt(): ?\DateTimeImmutable
     {
         return $this->subscription_end_at;
@@ -233,6 +228,48 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($pdf->getUser() === $this) {
                 $pdf->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getSubscription(): ?self
+    {
+        return $this->subscription;
+    }
+
+    public function setSubscription(?self $subscription): static
+    {
+        $this->subscription = $subscription;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, self>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(self $user): static
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->setSubscription($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(self $user): static
+    {
+        if ($this->users->removeElement($user)) {
+            // set the owning side to null (unless already changed)
+            if ($user->getSubscription() === $this) {
+                $user->setSubscription(null);
             }
         }
 
