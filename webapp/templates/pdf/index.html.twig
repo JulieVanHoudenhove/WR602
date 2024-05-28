@@ -1,15 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello PdfController!{% endblock %}
+{% block title %}Generate PDF{% endblock %}
 
 {% block body %}
-<div class="example-wrapper">
-    {{ form_start{form, {
-        'attr': {
-            'data-turbo': false,
-            'target': '_blank',
-        }
-    }} }}
+    {{ form_start(form, {'attr': {'method': 'POST'}}) }}
     {{ form_row(form.url) }}
-</div>
+    <button type="submit">Submit</button>
+    {{ form_end(form) }}
 {% endblock %}
