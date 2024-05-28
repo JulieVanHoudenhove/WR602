@@ -14,7 +14,7 @@ class MicroserviceClient extends AbstractController
     {
     }
 
-    public function createPdf(string $url ): Response
+    public function createPdf(string $url): Response
     {
         $hostMicroservice = $this->parameterBag->get('URL_MICROSERVICE_PDF');
 
