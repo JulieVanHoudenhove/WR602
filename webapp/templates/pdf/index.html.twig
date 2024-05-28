@@ -3,8 +3,9 @@
 {% block title %}Generate PDF{% endblock %}
 
 {% block body %}
+    <h1>Generate PDF</h1>
     {{ form_start(form, {'attr': {'method': 'POST'}}) }}
     {{ form_row(form.url) }}
-    <button type="submit">Submit</button>
+    <button type="submit">Generate PDF</button>
     {{ form_end(form) }}
 {% endblock %}
