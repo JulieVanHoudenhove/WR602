@@ -3,40 +3,70 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
-    <form method="post">
-        {% if error %}
-            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-        {% endif %}
-
-        {% if app.user %}
-            <div class="mb-3">
-                You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+    <div class="min-h-full flex items-center justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-md w-full space-y-8">
+            <div>
+                <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in to your account</h2>
             </div>
-        {% endif %}
+            <form class="mt-8 space-y-6 bg-white p-8 rounded-lg shadow-lg" method="post">
+                {% if error %}
+                    <div class="rounded-md bg-red-50 p-4">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <svg class="h-5 w-5 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M18 8a6 6 0 11-12 0 6 6 0 0112 0zm-7-3a1 1 0 00-2 0v4a1 1 0 001 1h2a1 1 0 000-2h-1V5z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <h3 class="text-sm font-medium text-red-800">
+                                    {{ error.messageKey|trans(error.messageData, 'security') }}
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
 
-        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-        <label for="username">Email</label>
-        <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="email" required autofocus>
-        <label for="password">Password</label>
-        <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
+                {% if app.user %}
+                    <div class="mb-3 text-center text-gray-600">
+                        You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}" class="text-indigo-600 hover:text-indigo-900">Logout</a>
+                    </div>
+                {% endif %}
 
-        <input type="hidden" name="_csrf_token"
-               value="{{ csrf_token('authenticate') }}"
-        >
+                <div class="rounded-md shadow-sm -space-y-px">
+                    <div>
+                        <label for="username" class="sr-only">Email address</label>
+                        <input id="username" name="_username" type="email" autocomplete="email" required
+                               class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                               placeholder="Email address" value="{{ last_username }}">
+                    </div>
+                    <div>
+                        <label for="password" class="sr-only">Password</label>
+                        <input id="password" name="_password" type="password" autocomplete="current-password" required
+                               class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                               placeholder="Password">
+                    </div>
+                </div>
 
-        {#
-            Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-            See https://symfony.com/doc/current/security/remember_me.html
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-            <div class="checkbox mb-3">
-                <label>
-                    <input type="checkbox" name="_remember_me"> Remember me
-                </label>
-            </div>
-        #}
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input id="remember_me" name="_remember_me" type="checkbox" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                        <label for="remember_me" class="ml-2 block text-sm text-gray-900"> Remember me </label>
+                    </div>
 
-        <button class="btn btn-lg btn-primary" type="submit">
-            Sign in
-        </button>
-    </form>
+                    <div class="text-sm">
+                        <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Forgot your password?</a>
+                    </div>
+                </div>
+
+                <div>
+                    <button type="submit"
+                            class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        Sign in
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 {% endblock %}

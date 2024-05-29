@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+        <script src="https://cdn.tailwindcss.com"></script>
         {% block stylesheets %}
         {% endblock %}
 
@@ -11,21 +12,30 @@
             {% block importmap %}{{ importmap('app') }}{% endblock %}
         {% endblock %}
     </head>
-    <body>
-        <nav>
-            <ul>
-                <li><a href="{{ path('app_homepage') }}">Home</a></li>
-                {% if app.user %}
-                    <li><a href="{{ path('app_pdf') }}">PDF</a></li>
-                    <li><a href="{{ path('app_history') }}">History</a></li>
-                    <li><a href="{{ path('app_subscription') }}">Subscription</a></li>
-                    <li><a href="{{ path('app_logout') }}">Logout</a></li>
-                {% else %}
-                    <li><a href="{{ path('app_login') }}">Login</a></li>
-                    <li><a href="{{ path('app_register') }}">Register</a></li>
-                {% endif %}
-            </ul>
-        </nav>
-        {% block body %}{% endblock %}
+    <body class="bg-gray-100 text-gray-800">
+    <nav class="bg-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="shrink-0 flex items-center">
+                        <a href="{{ path('app_homepage') }}" class="text-xl font-semibold text-gray-900">MyWebApp</a>
+                    </div>
+                    <div class="hidden sm:-my-px sm:ml-6 sm:flex">
+                        <a href="{{ path('app_homepage') }}" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition">Home</a>
+                        {% if app.user %}
+                            <a href="{{ path('app_pdf') }}" class="ml-8 inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition">PDF</a>
+                            <a href="{{ path('app_history') }}" class="ml-8 inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition">History</a>
+                            <a href="{{ path('app_subscription') }}" class="ml-8 inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition">Subscription</a>
+                            <a href="{{ path('app_logout') }}" class="ml-8 inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition">Logout</a>
+                        {% else %}
+                            <a href="{{ path('app_login') }}" class="ml-8 inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition">Login</a>
+                            <a href="{{ path('app_register') }}" class="ml-8 inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition">Register</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    {% block body %}{% endblock %}
     </body>
 </html>
