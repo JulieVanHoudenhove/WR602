@@ -11,6 +11,12 @@
 <div class="example-wrapper">
     <h1>Hello {{ controller_name }}! ✅</h1>
 
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
     This friendly message is coming from:
     <ul>
         <li>Your controller at <code>C:/JVH/MMI/S6/WR602 - Développement Web et dispositif interactif/WR602/webapp/src/Controller/HomepageController.php</code></li>
