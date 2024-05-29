@@ -7,12 +7,15 @@
         <div class="max-w-md w-full space-y-8">
             <div>
                 <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">Generate PDF</h2>
+                <p>You have <strong>{{ pdf_limit - pdf_count }}/{{ pdf_limit }}</strong> conversions left. For more, upgrade.</p>
             </div>
             {{ form_start(form, {'attr': {'method': 'POST', 'class': 'mt-8 space-y-6 bg-white p-8 rounded-lg shadow-lg'}}) }}
                 <div class="rounded-md shadow-sm -space-y-px">
                     <div>
+                        {{ form_label(form.title, 'Enter title', { 'label_attr': { 'class': 'sr-only' } }) }}
+                        {{ form_widget(form.title, { 'attr': { 'class': 'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm', 'placeholder': 'Enter title' } }) }}
                         {{ form_label(form.url, 'Enter URL', { 'label_attr': { 'class': 'sr-only' } }) }}
-                        {{ form_widget(form.url, { 'attr': { 'class': 'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm', 'placeholder': 'Enter URL' } }) }}
+                        {{ form_widget(form.url, { 'attr': { 'class': 'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm', 'placeholder': 'Enter URL' } }) }}
                     </div>
                 </div>
 
