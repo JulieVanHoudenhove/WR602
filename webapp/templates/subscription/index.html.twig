@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Manage My Subscription{% endblock %}
+
+{% block body %}
+    <div class="min-h-full flex items-center justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl w-full space-y-8">
+            <div>
+                <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">Manage My Subscription</h2>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-lg space-y-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {% for subscription in subscriptions %}
+                        <div class="p-6 rounded-lg border border-gray-200 shadow-sm flex flex-col items-center justify-between h-auto">
+                            <div class="flex-1 flex flex-col items-center text-center">
+                                <h3 class="text-2xl font-semibold text-gray-900">{{ subscription.title }}</h3>
+                                <p class="text-gray-700 mt-4">{{ subscription.description | raw }}</p>
+                            </div>
+                            <div class="mt-6 text-center">
+                                <p class="text-gray-600">Features:</p>
+                                <p class="text-gray-800 font-bold">{{ subscription.price }} € / month</p>
+                                <p class="text-gray-800 font-bold">{{ subscription.getPdfLimit }} PDFs / day</p>
+                            </div>
+                            <div class="mt-6 w-full">
+                                {% if user_subscription.id == subscription.id %}
+                                    <button class="w-full py-3 px-4 bg-green-500 text-white font-medium rounded-md shadow-sm cursor-not-allowed">Current</button>
+                                {% else %}
+                                    <button onclick="window.location.href='{{ path('app_subscription_change', {'id': subscription.id}) }}'"
+                                            class="w-full py-3 px-4 bg-indigo-600 text-white font-medium rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                        Choose
+                                    </button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
