@@ -15,7 +15,9 @@
         <nav>
             <ul>
                 <li><a href="{{ path('app_homepage') }}">Home</a></li>
-                <li><a href="{{ path('app_pdf') }}">Générateur de PDF</a></li>
+                <li><a href="{{ path('app_pdf') }}">PDF</a></li>
+                <li><a href="{{ path('app_history') }}">History</a></li>
+                <li><a href="{{ path('app_subscription') }}">Subscription</a></li>
                 {% if not app.user %}
                     <li><a href="{{ path('app_login') }}">Login</a></li>
                     <li><a href="{{ path('app_register') }}">Register</a></li>
