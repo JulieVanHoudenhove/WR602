@@ -56,8 +56,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Pdf::class, mappedBy: 'user')]
     private Collection $pdf;
 
-    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'users')]
-    private ?self $subscription = null;
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    private ?Subscription $subscription = null;
 
     /**
      * @var Collection<int, self>
@@ -242,12 +242,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getSubscription(): ?self
+    public function getSubscription(): ?Subscription
     {
         return $this->subscription;
     }
 
-    public function setSubscription(?self $subscription): static
+    public function setSubscription(?Subscription $subscription): static
     {
         $this->subscription = $subscription;
 
