@@ -7,7 +7,7 @@
         <div class="max-w-md w-full space-y-8">
             <div>
                 <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">Generate PDF</h2>
-                <p>Il vous reste <strong>{{ pdf_limit - pdf_count }}/{{ pdf_limit }}</strong> conversions. Pour en obtenir davantage, passez au plan supérieur.</p>
+                <p>You have <strong>{{ pdf_limit - pdf_count }}/{{ pdf_limit }}</strong> conversions left. For more, upgrade.</p>
             </div>
             {{ form_start(form, {'attr': {'method': 'POST', 'class': 'mt-8 space-y-6 bg-white p-8 rounded-lg shadow-lg'}}) }}
                 <div class="rounded-md shadow-sm -space-y-px">

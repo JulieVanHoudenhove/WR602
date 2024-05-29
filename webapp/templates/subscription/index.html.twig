@@ -1,20 +1,40 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello SubscriptionController!{% endblock %}
+{% block title %}Manage My Subscription{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/JVH/MMI/S6/WR602 - Développement Web et dispositif interactif/WR602/webapp/src/Controller/SubscriptionController.php</code></li>
-        <li>Your template at <code>C:/JVH/MMI/S6/WR602 - Développement Web et dispositif interactif/WR602/webapp/templates/subscription/index.html.twig</code></li>
-    </ul>
-</div>
+    <div class="min-h-full flex items-center justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl w-full space-y-8">
+            <div>
+                <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">Manage My Subscription</h2>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-lg space-y-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {% for subscription in subscriptions %}
+                        <div class="p-6 rounded-lg border border-gray-200 shadow-sm flex flex-col items-center justify-between h-auto">
+                            <div class="flex-1 flex flex-col items-center text-center">
+                                <h3 class="text-2xl font-semibold text-gray-900">{{ subscription.title }}</h3>
+                                <p class="text-gray-700 mt-4">{{ subscription.description | raw }}</p>
+                            </div>
+                            <div class="mt-6 text-center">
+                                <p class="text-gray-600">Features:</p>
+                                <p class="text-gray-800 font-bold">{{ subscription.price }} € / month</p>
+                                <p class="text-gray-800 font-bold">{{ subscription.getPdfLimit }} PDFs / day</p>
+                            </div>
+                            <div class="mt-6 w-full">
+                                {% if user_subscription.id == subscription.id %}
+                                    <button class="w-full py-3 px-4 bg-green-500 text-white font-medium rounded-md shadow-sm cursor-not-allowed">Current</button>
+                                {% else %}
+                                    <button onclick="window.location.href='{{ path('app_subscription_change', {'id': subscription.id}) }}'"
+                                            class="w-full py-3 px-4 bg-indigo-600 text-white font-medium rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                        Choose
+                                    </button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
