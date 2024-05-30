@@ -30,4 +30,14 @@
             {{ form_end(form) }}
         </div>
     </div>
+
+    <script>
+        // Masquer les messages flash après 5 secondes
+        setTimeout(function() {
+            var flashMessages = document.getElementById('flash-messages');
+            if (flashMessages) {
+                flashMessages.innerHTML = '';
+            }
+        }, 5000); // 5000 millisecondes = 5 secondes
+    </script>
 {% endblock %}
