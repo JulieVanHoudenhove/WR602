@@ -36,6 +36,10 @@ jobs:
       run: |
         cd webapp/
         php bin/phpunit --coverage-text
+    - name: List vendor/bin contents for debugging
+      run: |
+        cd webapp/
+        ls -la vendor/bin/
     - name: Execute CodeSniffer
       run: |
         cd webapp/
