@@ -13,12 +13,12 @@ jobs:
   symfony-tests:
     runs-on: ubuntu-latest
     steps:
+    - uses: shivammathur/setup-php@2cb9b829437ee246e9b3cac53555a39208ca6d28
+      with:
+        php-version: '8.2'
+    - uses: actions/checkout@v3
     - name: List root directory contents for debugging
       run: ls && pwd
-    # - uses: shivammathur/setup-php@2cb9b829437ee246e9b3cac53555a39208ca6d28
-    #   with:
-    #     php-version: '8.2'
-    # - uses: actions/checkout@v3
     # - name: Copy .env.test.local
     #   run: php -r "file_exists('.env.local') || copy('.env.test', '.env.local');"
     # - name: Cache Composer packages
