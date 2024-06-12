@@ -18,7 +18,10 @@ jobs:
         php-version: '8.2'
     - uses: actions/checkout@v3
     - name: Move in webapp
-      run: cd webapp/
+      run: |
+        cd webapp/
+        ls
+        pwd
     - name: Copy .env.test.local
       run: php -r "file_exists('.env.local') || copy('.env.test', '.env.local');"
     - name: Install Dependencies
