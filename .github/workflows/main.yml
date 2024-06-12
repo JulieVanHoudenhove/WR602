@@ -22,8 +22,9 @@ jobs:
         cd webapp/
         ls
         pwd
-    - name: Copy .env.test.local
-      run: php -r "file_exists('.env.local') || copy('.env.test', '.env.local');"
+    - name: Create .env.local file
+      run: |
+        echo "DATABASE_URL=mysql://root:root@127.0.0.1:3306/test_db" > .env.local
     - name: Install Dependencies
       run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
     - name: Create Database
