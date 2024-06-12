@@ -13,12 +13,12 @@ jobs:
   symfony-tests:
     runs-on: ubuntu-latest
     steps:
+    - name: Go on WebApp file
+      run : cd /webapp
     - uses: shivammathur/setup-php@2cb9b829437ee246e9b3cac53555a39208ca6d28
       with:
         php-version: '8.2'
     - uses: actions/checkout@v3
-    - name: Go on WebApp file
-      run : cd /webapp
     - name: Copy .env.test.local
       run: php -r "file_exists('.env.local') || copy('.env.test', '.env.local');"
     - name: Cache Composer packages
