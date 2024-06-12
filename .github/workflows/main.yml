@@ -43,7 +43,7 @@ jobs:
     - name: Execute CodeSniffer
       run: |
         cd webapp/
-        vendor/bin/phpcs --standard=PSR2 --fix src/
+        vendor/bin/phpcsf --standard=PSR2 src/
     - name: Execute PhpStan
       run: |
         cd webapp/
