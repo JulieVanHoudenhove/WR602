@@ -1,4 +1,4 @@
-name: WR602
+name: blop
 
 on:
   push:
@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: List root directory contents for debugging
-      run: ls
+      run: ls && pwd
     - uses: shivammathur/setup-php@2cb9b829437ee246e9b3cac53555a39208ca6d28
       with:
         php-version: '8.2'
