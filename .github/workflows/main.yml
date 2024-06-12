@@ -15,15 +15,6 @@ jobs:
     steps:
     - name: List root directory contents for debugging
       run: ls
-    - name: Verify WebApp directory exists
-      run: |
-        if [ -d "webapp" ]; then
-          echo "WebApp directory exists"
-          ls -la webapp
-        else
-          echo "WebApp directory does not exist"
-          exit 1
-        fi
     - uses: shivammathur/setup-php@2cb9b829437ee246e9b3cac53555a39208ca6d28
       with:
         php-version: '8.2'
