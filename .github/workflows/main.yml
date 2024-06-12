@@ -1,43 +1,47 @@
-name: CI/CD Pipeline
+name: WR602
 
 on:
   push:
-    branches: [ develop ]
+    branches: [ "develop" ]
   pull_request:
-    branches: [ develop ]
+    branches: [ "develop" ]
+
+permissions:
+  contents: read
 
 jobs:
-  build:
+  symfony-tests:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        php-version: [ '7.4', '8.0', '8.1' ]
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Set up PHP ${{ matrix.php-version }}
-      uses: shivammathur/setup-php@v2
+    - uses: shivammathur/setup-php@2cb9b829437ee246e9b3cac53555a39208ca6d28
       with:
-        php-version: ${{ matrix.php-version }}
-        extensions: mbstring, intl, pdo, mysql, dom, xml
-        coverage: none
-
-    - name: Install Composer dependencies
-      run: cd webapp/ && composer install --prefer-dist --no-progress --no-suggest
-
-    - name: Run PHPUnit tests
-      run: vendor/bin/phpunit
-
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
+        php-version: '8.2'
+    - uses: actions/checkout@v3
+    - name: Go on WebApp file
+      run : cd /webapp
+    - name: Copy .env.test.local
+      run: php -r "file_exists('.env.local') || copy('.env.test', '.env.local');"
+    - name: Cache Composer packages
+      id: composer-cache
+      uses: actions/cache@v3
       with:
-        node-version: '20'
-
-    - name: Install npm dependencies
-      run: npm install
-
-    - name: Run Cypress tests
-      run: npx cypress run
+        path: vendor
+        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-php-
+    - name: Install Dependencies
+      run: composer install --prefer-dist --no-progress --no-suggest
+    - name: Create Database
+      run: |
+        mkdir -p data
+        touch data/database.sqlite
+    - name: Execute tests (Unit and Feature tests) via PHPUnit
+      env:
+        DATABASE_URL: sqlite:///%kernel.project_dir%/data/database.sqlite
+      run: vendor/bin/phpunit tests/
+    - name: Execute CodeSniffer
+      run: vendor/bin/phpcs --standard=PSR2 src/
+    - name: Execute PhpStan
+      run: vendor/bin/phpstan analyze src/
+    - name: Execute PhpMd
+      run: vendor/bin/phpmd src/ text cleancode,codesize,controversial
